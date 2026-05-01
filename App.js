@@ -66,7 +66,7 @@ const MainApp = () => {
     setModalVisible(false);
   };
 
-  const metrics = getMetrics(dates);
+  const metrics = getMetrics(dates, visibleTasks);
 
   if (loading) {
     return (

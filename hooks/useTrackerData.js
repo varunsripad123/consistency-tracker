@@ -80,17 +80,18 @@ export const useTrackerData = () => {
         saveData(tasks, newCompletions);
     };
 
-    const getMetrics = (dateList) => {
+    const getMetrics = (dateList, tasksForMonth = null) => {
         if (!dateList || !Array.isArray(dateList) || dateList.length === 0) {
             return { completedCount: 0, totalPossible: 0, coins: 0 };
         }
 
         let completedCount = 0;
-        const totalPossible = tasks.length * dateList.length;
+        const relevantTasks = Array.isArray(tasksForMonth) ? tasksForMonth : tasks;
+        const totalPossible = relevantTasks.length * dateList.length;
 
-        // Iterate through valid dates and tasks to count actual completions in this range
+        // Iterate through valid dates and relevant tasks to count actual completions in this range
         dateList.forEach(date => {
-            tasks.forEach(task => {
+            relevantTasks.forEach(task => {
                 const key = `${date}_${task.id}`;
                 if (completions[key]) {
                     completedCount++;
